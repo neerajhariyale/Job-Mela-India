@@ -18,6 +18,7 @@ import { Editor } from "./Editor"
 function JobPostForm() {
 
   const [formData, setFormData] = useState({
+    jobType: "",
     company: "",
     role: "",
     experience: "",
@@ -64,6 +65,7 @@ function JobPostForm() {
 
       // Clear form
       setFormData({
+        jobType: "",
         company: "",
         role: "",
         experience: "",
@@ -91,7 +93,10 @@ function JobPostForm() {
           {/* Select Job Type */}
           <div className="flex flex-col gap-2">
             <Label>Select Job Type</Label>
-            <SelectJob />
+            <SelectJob value={formData.jobType}
+              onChange={(selectedJobType) =>
+                setFormData((prev) => ({ ...prev, jobType: selectedJobType }))
+              } />
           </div>
 
           <InputBlock

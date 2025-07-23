@@ -10,9 +10,15 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
-export function SelectJob() {
+export function SelectJob({
+  value,
+  onChange,
+}: {
+  value: string;
+  onChange: (value: string) => void;
+}) {
   return (
-    <Select>
+    <Select value={value} onValueChange={onChange}>
       <SelectTrigger className="w-[180px] hover:cursor-pointer">
         <SelectValue placeholder="Select Job Type" />
       </SelectTrigger>
