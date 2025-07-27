@@ -18,7 +18,7 @@ function HeroMain() {
     const [jobs, setJobs] = useState<Job[]>([]);
 
     useEffect(() => {
-        axios.get("https://job-mela-india-a3oq.vercel.app/api/jobs")
+        axios.get("http://localhost:5000/api/jobs")
             .then(res => setJobs(res.data))
             .catch(err => console.error(err));
     }, []);

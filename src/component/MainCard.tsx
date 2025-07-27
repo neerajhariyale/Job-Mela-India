@@ -7,6 +7,7 @@ type Job = {
   location: string;
   startDate: string;
   jobType: string;
+  about20Words?: string;
   // add other fields as needed
 };
 
@@ -19,6 +20,7 @@ export default function MainCard({ job }: MainCardProps) {
         <div key={job._id} className="flex mt-4 justify-center items-center gap-2 flex-col w-76 h-full border-2 rounded-lg hover:shadow-2xl hover:scale-105 transform transition-all duration-200 cursor-pointer ">
                 <img src={job.imagelink} alt="" className="w-full h-32 object-fit rounded-lg p-2" />
                 <h1 className="text-xl font-semibold text-center tracking-wide mb-1 ">{job.role}</h1>
+                <p>{job.about20Words || job.about?.substring(0, 100) + "..."}</p>
                 <p className="text-sm text-gray-500 text-left ">
                             Start Date: {new Date(job.startDate).toLocaleDateString()}
                         </p>
