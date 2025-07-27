@@ -63,7 +63,7 @@ function JobPostForm() {
     }
 
     try {
-      const response = await axios.post("http://localhost:5000/api/jobs", {
+      const response = await axios.post("https://job-mela-india-a3oq.vercel.app/api/jobs", {
         ...formData,
         startDate: formData.startDate ? formData.startDate.toISOString() : "",
         endDate: formData.endDate ? formData.endDate.toISOString() : "",
