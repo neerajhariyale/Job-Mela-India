@@ -15,6 +15,7 @@ const jobSchema = new mongoose.Schema({
   location: String,
   startDate: String,
   endDate: String,
+  about20Words: String,
 }, { timestamps: true });
 
 jobSchema.pre("save", async function (next) {

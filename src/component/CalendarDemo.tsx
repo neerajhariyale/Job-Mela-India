@@ -21,7 +21,7 @@ const CalendarDemo: React.FC<CalendarDemoProps> = ({
   return (
     <div className="flex flex-col gap-2">
       {label && (
-        <label htmlFor={id} className="font-medium text-md">
+        <label htmlFor={id} className="font-medium text-sm">
           {label}
         </label>
       )}
@@ -34,6 +34,7 @@ const CalendarDemo: React.FC<CalendarDemoProps> = ({
   className="w-full border p-1 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400 focus:shadow-sm"
   popperPlacement="bottom-start"
   showPopperArrow={false}
+  
 />
     </div>
   );

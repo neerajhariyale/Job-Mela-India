@@ -31,7 +31,7 @@ function HeroMain() {
         <div className="w-full md:w-11/12 lg:w-11/12 xl:w-11/12 2xl:w-11/12 mx-auto mt-2">
 
             <h1 className="text-3xl font-semibold text-center tracking-wide mb-4 underline dashed mt-3  ">Recent Jobs & Internship</h1>
-            <div className=" flex gap-8 w-full px-6   mx-auto h-full flex-col   ">
+            <div className=" flex gap-8 w-full px-6   mx-auto h-full   ">
                 {jobs.map((job) => (
                     <MainCard job={job} />
                 ))}
@@ -40,7 +40,7 @@ function HeroMain() {
 
 
             <h1 className="text-3xl font-semibold text-center tracking-wide mb-4 underline dashed mt-3  ">Recent IT Jobs</h1>
-            <div className=" flex gap-8 w-full px-6  mx-auto h-full md:overflow-x-auto md:flex-row flex-col   ">
+            <div className=" flex gap-8 w-full px-6  mx-auto h-full  ">
 
                 {itJobs.map((job) => (
                     <MainCard job={job} />

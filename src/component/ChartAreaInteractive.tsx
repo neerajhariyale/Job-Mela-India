@@ -18,7 +18,6 @@ import {
 import {
   ChartContainer,
   ChartLegend,
-  ChartLegendContent,
   ChartTooltip,
   ChartTooltipContent,
 } from "../components/ui/chart"
@@ -179,7 +178,7 @@ export function ChartAreaInteractive() {
               stroke="#ef4444"
               stackId="a"
             />
-            <ChartLegend content={<ChartLegendContent />} />
+            <ChartLegend />
           </AreaChart>
         </ChartContainer>
       </CardContent>

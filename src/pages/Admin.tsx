@@ -6,7 +6,7 @@ function Admin() {
         <div>
             <h1>Admin</h1>
             <div className="flex justify-center items-center border-2 w-full h-96">
-            <RainbowButtonDemo/>
+            <RainbowButtonDemo>Admin Button</RainbowButtonDemo>
             </div>
             
         </div>

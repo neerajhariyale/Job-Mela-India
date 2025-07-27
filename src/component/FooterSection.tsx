@@ -108,17 +108,21 @@ const FooterSection = () => {
               <div key={title}>
                 <h6 className="font-semibold">{title}</h6>
                 <ul className="mt-6 space-y-3">
-                  {links.map(({ title, href, onClick }) => (
-                    <li key={title}>
-                      <Link
-                        to={href}
-                        onClick={onClick}
-                        className="text-muted-foreground hover:text-foreground"
-                      >
-                        {title}
-                      </Link>
-                    </li>
-                  ))}
+                  {links.map((link) => {
+                    if (!link || typeof link !== 'object') return null;
+                    const { title, href, onClick } = link;
+                    return (
+                      <li key={title}>
+                        <Link
+                          to={href}
+                          onClick={onClick}
+                          className="text-muted-foreground hover:text-foreground"
+                        >
+                          {title}
+                        </Link>
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
             ))}

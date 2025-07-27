@@ -5,9 +5,8 @@ import { toast } from "sonner"
 import { SelectJob } from "./SelectJob"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-// import { Textarea } from "@/components/ui/textarea"
+import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
-import { Calendar22 } from "./Calendar22"
 import CalendarDemo from "./CalendarDemo"
 import { RainbowButtonDemo } from "./RainbowButtonDemo"
 import { Link } from "react-router-dom"
@@ -31,6 +30,7 @@ function JobPostForm() {
     location: "",
     startDate: null as Date | null,
     endDate: null as Date | null,
+    about20Words: "",
   })
 
   const handleChange = (
@@ -39,6 +39,16 @@ function JobPostForm() {
     const { id, value } = e.target
     setFormData((prev) => ({ ...prev, [id]: value }))
   }
+
+  const handleAboutChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const inputValue = e.target.value;
+    const words = inputValue.trim().split(/\s+/).filter(Boolean);
+  
+    // Limit to first 20 words only
+    const limitedWords = words.slice(0, 20).join(" ");
+  
+    setFormData((prev) => ({ ...prev, about20Words: limitedWords }));
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -78,6 +88,7 @@ function JobPostForm() {
         location: "",
         startDate: null,
         endDate: null,
+        about20Words: "",
       })
     } catch (error) {
       console.error("❌ Error submitting form:", error)
@@ -142,6 +153,7 @@ function JobPostForm() {
               setFormData((prev) => ({ ...prev, endDate: date }))
             }
             placeholder="🗓️"
+            
           />
 
 
@@ -174,6 +186,19 @@ function JobPostForm() {
             setFormData((prev) => ({ ...prev, endDate: date }))
           }
         /> */}
+
+          <Label htmlFor="about20Words" className="block mb-1 font-lg">
+            Enter Job Details <span className="text-xs font-xs text-gray-600 ">(approx. 20 words)</span>
+          </Label>
+          <Textarea
+            id="about20Words"
+            name="about20Words"
+            value={formData.about20Words}
+            onChange={handleAboutChange}
+            placeholder="Briefly describe the job in around 20 words"
+            className="w-full mt-2 p-2 border rounded-md focus:outline-none focus:ring"
+          />
+
 
           <InputBlock
             id="location"

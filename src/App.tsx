@@ -10,11 +10,10 @@ import AdminLogin from "./pages/AdminLogin";
 import Admin from "./pages/Admin";
 import AdminDashboard from "./pages/AdminDashboard";
 import { VelocityScroll } from "@/components/magicui/scroll-based-velocity";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { Toaster } from "sonner";
 import JobPost from "./pages/JobPost"
 import AdminViewAllJobs from "./pages/AdminViewAllJobs";
-import { AdminCardDemo1 } from "./component/AdminCardDemo1";
 
 function App() {
   return (
