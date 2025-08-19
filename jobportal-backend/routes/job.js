@@ -25,6 +25,76 @@ router.get("/", async (req, res) => {
   }
 });
 
+//find by id
+router.get("/api/jobs", async (req, res) => {
+  try {
+    const { jobId } = req.query;
+    console.log("Query Params:", req.query);
+
+    if (!jobId) {
+      return res.status(400).json({ error: "jobId is required" });
+    }
+
+    // validate id
+    if (!mongoose.Types.ObjectId.isValid(jobId.trim())) {
+      return res.status(400).json({ error: "Invalid jobId format", jobId });
+    }
+
+    // find job
+    const job = await Job.findById(jobId.trim());
+    if (!job) {
+      return res.status(404).json({ error: "Job not found", jobId });
+    }
+
+    // ✅ single job only
+    return res.json(job);
+
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: "Server error" });
+  }
+});
+
+
+
+
+
+// ✅ GET Job Statistics Summary
+router.get("/stats", async (req, res) => {
+  try {
+    const jobs = await Job.find();
+    
+    const stats = jobs.reduce((acc, job) => {
+      acc.total++;
+      
+      const jobType = job.jobType?.toLowerCase() || '';
+      
+      if (jobType.includes('internship')) {
+        acc.internship++;
+      } else if (jobType.includes('itjobs') || jobType.includes('technology')) {
+        acc.it++;
+      } else if (jobType.includes('nonitjobs') || jobType.includes('nonit')) {
+        acc.nonit++;
+      } else if (jobType.includes('govtjobs') || jobType.includes('govt')) {
+        acc.govt++;
+      }
+      
+      return acc;
+    }, {
+      total: 0,
+      internship: 0,
+      it: 0,
+      nonit: 0,
+      govt: 0
+    });
+
+    res.status(200).json(stats);
+  } catch (err) {
+    console.error("Job stats error:", err);
+    res.status(500).json({ error: "Failed to fetch job statistics" });
+  }
+});
+
 // ✅ GET Chart Statistics
 router.get("/chart-stats", async (req, res) => {
   try {
@@ -117,15 +187,15 @@ router.get("/chart-stats", async (req, res) => {
           case "internship":
             dataPoint.internship = jobType.count;
             break;
-          case "it jobs":
+          case "itjobs":
           case "it":
             dataPoint.it = jobType.count;
             break;
-          case "non-it jobs":
+          case "nonitjobs":
           case "nonit":
             dataPoint.nonit = jobType.count;
             break;
-          case "government jobs":
+          case "govtjobs":
           case "govt":
             dataPoint.govt = jobType.count;
             break;

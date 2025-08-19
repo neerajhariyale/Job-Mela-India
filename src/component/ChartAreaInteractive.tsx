@@ -74,6 +74,7 @@ export function ChartAreaInteractive() {
       setError(null)
       
       const response = await axios.get(`http://localhost:5000/api/jobs/chart-stats?timeRange=${range}`)
+      console.log(response.data)
       setChartData(response.data)
     } catch (err) {
       console.error("Failed to fetch chart data:", err)

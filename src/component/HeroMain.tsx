@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import MainCard from "./MainCard";
+import { useNavigate } from "react-router-dom";
 
 type Job = {
     _id: string;
@@ -17,6 +18,8 @@ type Job = {
 function HeroMain() {
     const [jobs, setJobs] = useState<Job[]>([]);
 
+    const navigate = useNavigate();
+
     useEffect(() => {
         axios.get("http://localhost:5000/api/jobs")
             .then(res => setJobs(res.data))
@@ -28,10 +31,10 @@ function HeroMain() {
     const govtJobs = jobs.filter(job => job.jobType === "govtjobs");
 
     return (
-        <div className="w-full md:w-11/12 lg:w-11/12 xl:w-11/12 2xl:w-11/12 mx-auto mt-2">
+        <div className="w-full md:w-11/12 lg:w-11/12 xl:w-11/12 2xl:w-11/12 mx-auto mt-2 grid md:grid-3 lg:grid-4">
 
             <h1 className="text-3xl font-semibold text-center tracking-wide mb-4 underline dashed mt-3  ">Recent Jobs & Internship</h1>
-            <div className=" flex gap-8 w-full px-6   mx-auto h-full   ">
+            <div className=" flex gap-8 w-full px-6   mx-auto h-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-16 px-6  ">
                 {jobs.map((job) => (
                     <MainCard job={job} />
                 ))}
@@ -39,8 +42,8 @@ function HeroMain() {
 
 
 
-            <h1 className="text-3xl font-semibold text-center tracking-wide mb-4 underline dashed mt-3  ">Recent IT Jobs</h1>
-            <div className=" flex gap-8 w-full px-6  mx-auto h-full  ">
+            <h1 className="text-3xl font-semibold text-center tracking-wide mb-4 underline dashed mt-8  ">Recent IT Jobs</h1>
+            <div className=" flex gap-8 w-full px-6  mx-auto h-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-6 mx-auto ">
 
                 {itJobs.map((job) => (
                     <MainCard job={job} />
@@ -49,24 +52,18 @@ function HeroMain() {
 
 
 
-            <h1 className="text-3xl font-semibold text-center tracking-wide mb-4 underline dashed mt-3  ">Recent Non IT Jobs</h1>
-            <div className=" flex gap-8 w-full px-6  mx-auto h-full md:overflow-x-auto md:flex-row flex-col   ">
+            <h1 className="text-3xl font-semibold text-center tracking-wide mb-4 underline dashed mt-8  ">Recent Non IT Jobs</h1>
+            <div className=" flex gap-8 w-full px-6   mx-auto h-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-6 mx-auto  ">
 
-                {nonItJobs.map((job) => (
-                    <div key={job._id} className="flex mt-4 justify-center items-center gap-2 flex-col w-full h-full border-2 rounded-lg hover:shadow-2xl hover:scale-105 transform transition-all duration-200 cursor-pointer ">
-                        <img src={job.imagelink} alt="" className="w-full h-32 object-fit rounded-lg p-2" />
-                        <h1 className="text-2xl font-semibold text-center tracking-wide mb-1 ">{job.role}</h1>
-                        <p className="text-sm text-gray-500 text-left m-2 ">{job.about}</p>
-                        {/* <button className="bg-blue-500 text-white px-4 py-2 rounded-md w-3/4 hover:bg-blue-600 transition-all duration-100 cursor-pointer">Apply Now</button> */}
-                        <button className="bg-blue-500 text-white px-4 py-2 rounded-md w-3/4 mb-4 hover:bg-blue-600 transition-all duration-100 cursor-pointer">View Details</button>
-                    </div>
+               {nonItJobs.map((job) => (
+                    <MainCard job={job} />
                 ))}
             </div>
 
 
 
-            <h1 className="text-3xl font-semibold text-center tracking-wide mb-4 underline dashed mt-3  ">Recent Govt. Jobs</h1>
-            <div className=" flex gap-8 w-full px-6  mx-auto h-full md:overflow-x-auto md:flex-row flex-col   ">
+            <h1 className="text-3xl font-semibold text-center tracking-wide mb-4 underline dashed mt-8  ">Recent Govt. Jobs</h1>
+            <div className=" flex gap-8 w-full px-6   mx-auto h-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-6 mx-auto  ">
 
                 {govtJobs.map((job) => (
                     <MainCard job={job} />

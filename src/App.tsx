@@ -14,6 +14,7 @@ import { Routes, Route } from "react-router-dom";
 import { Toaster } from "sonner";
 import JobPost from "./pages/JobPost"
 import AdminViewAllJobs from "./pages/AdminViewAllJobs";
+import JobDetails from "./component/JobDetails";
 
 function App() {
   return (
@@ -44,7 +45,7 @@ function App() {
           <Route path="/job-post" element={<JobPost />} />
           <Route path="/admin-view-all-jobs" element={<AdminViewAllJobs />} />
           <Route path="/admin-view-all-jobs/page-no/:page" element={<AdminViewAllJobs />} />
-
+          <Route path="/job-details/:company/:jobRole/:jobId" element={<JobDetails/>} />
 
         </Routes>
 
