@@ -31,10 +31,10 @@ function HeroMain() {
     const govtJobs = jobs.filter(job => job.jobType === "govtjobs");
 
     return (
-        <div className="w-full md:w-11/12 lg:w-11/12 xl:w-11/12 2xl:w-11/12 mx-auto mt-2 grid md:grid-3 lg:grid-4">
+        <div className="w-full md:w-11/12 lg:w-11/12 xl:w-11/12 2xl:w-11/12 mx-auto mt-2 grid md:grid-3 lg:grid-4 ">
 
             <h1 className="text-3xl font-semibold text-center tracking-wide mb-4 underline dashed mt-3  ">Recent Jobs & Internship</h1>
-            <div className=" flex gap-8 w-full px-6   mx-auto h-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-16 px-6  ">
+            <div className=" place-items-center text-center flex gap-8 w-full px-6   mx-auto h-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-16 px-6  ">
                 {jobs.map((job) => (
                     <MainCard job={job} />
                 ))}
