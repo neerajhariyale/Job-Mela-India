@@ -11,7 +11,6 @@ function AdminDashboard() {
   const totalJobs = 50;
   const currentPage = 1;
   const jobsPerPage = 10;
-  const onPageChange = 2;
 
   return (
     <div>
@@ -43,7 +42,6 @@ function AdminDashboard() {
             totalJobs={totalJobs}
             currentPage={currentPage}
             jobsPerPage={jobsPerPage}
-            onPageChange={onPageChange}
           />
         </div>
       </div>
