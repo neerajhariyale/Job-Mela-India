@@ -5,6 +5,7 @@ import {
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { apiEndpoints } from "@/lib/api";
 
 const jobTypeMap: { [key: string]: string } = {
   itjobs: "IT Jobs",
@@ -29,7 +30,7 @@ export function TableDemo() {
   const [jobs, setJobs] = useState<Job[]>([]);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/jobs")
+    axios.get(apiEndpoints.jobs.getAll())
       .then(res => setJobs(res.data))
       .catch(err => console.error(err));
   }, []);

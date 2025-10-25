@@ -13,6 +13,7 @@ import { Link } from "react-router-dom"
 import { TypingAnimationDemo } from "./TypingAnimationDemo"
 import axios from "axios"
 import { Editor } from "./Editor"
+import { apiEndpoints } from "@/lib/api"
 
 function JobPostForm() {
 
@@ -63,7 +64,7 @@ function JobPostForm() {
     }
 
     try {
-      const response = await axios.post("http://localhost:5000/api/jobs", {
+      const response = await axios.post(apiEndpoints.jobs.create(), {
         ...formData,
         startDate: formData.startDate ? formData.startDate.toISOString() : "",
         endDate: formData.endDate ? formData.endDate.toISOString() : "",

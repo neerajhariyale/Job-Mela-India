@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { apiEndpoints } from "@/lib/api";
 
 type Job = {
   _id: string;
@@ -28,7 +29,7 @@ export default function JobDetails() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/jobs") // fetch all jobs
+      .get(apiEndpoints.jobs.getAll()) // fetch all jobs
       .then((res) => {
         const jobs = res.data;
         const foundJob = jobs.find((j: { _id: string | undefined; }) => j._id === jobId); // match ID

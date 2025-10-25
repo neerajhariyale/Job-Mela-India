@@ -31,6 +31,7 @@ import {
 } from "@/components/ui/select"
 import axios from "axios"
 import { toast } from "sonner"
+import { apiEndpoints } from "@/lib/api"
 
 const chartConfig = {
   visitors: {
@@ -73,7 +74,7 @@ export function ChartAreaInteractive() {
       setLoading(true)
       setError(null)
       
-      const response = await axios.get(`http://localhost:5000/api/jobs/chart-stats?timeRange=${range}`)
+      const response = await axios.get(apiEndpoints.jobs.chartStats(range))
       console.log(response.data)
       setChartData(response.data)
     } catch (err) {

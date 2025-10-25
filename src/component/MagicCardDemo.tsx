@@ -17,6 +17,7 @@ import { useTheme } from "next-themes";
 import { toast } from "sonner";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { apiEndpoints } from "@/lib/api";
 
 export function MagicCardDemo() {
   const navigate = useNavigate();
@@ -39,7 +40,7 @@ export function MagicCardDemo() {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/login", {
+      const res = await axios.post(apiEndpoints.auth.login(), {
         email,
         password,
       });
@@ -60,7 +61,7 @@ export function MagicCardDemo() {
   const handleOtpSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/verify-otp", {
+      const res = await axios.post(apiEndpoints.auth.verifyOtp(), {
         email,
         otp,
       });

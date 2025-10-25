@@ -2,6 +2,7 @@ import { NumberTicker } from "@/components/magicui/number-ticker";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "sonner";
+import { apiEndpoints } from "@/lib/api";
 
 export function NumberTickerDemo() {
   const [totalJobs, setTotalJobs] = useState(0);
@@ -11,7 +12,7 @@ export function NumberTickerDemo() {
     const fetchTotalJobs = async () => {
       try {
         setLoading(true);
-        const response = await axios.get("http://localhost:5000/api/jobs/stats");
+        const response = await axios.get(apiEndpoints.jobs.stats());
         setTotalJobs(response.data.total);
       } catch (error) {
         console.error("Error fetching total jobs:", error);

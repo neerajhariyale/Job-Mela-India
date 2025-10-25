@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import MainCard from "./MainCard";
 import { useNavigate } from "react-router-dom";
+import { apiEndpoints } from "@/lib/api";
 
 type Job = {
     _id: string;
@@ -21,7 +22,7 @@ function HeroMain() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get("http://localhost:5000/api/jobs")
+        axios.get(apiEndpoints.jobs.getAll())
             .then(res => setJobs(res.data))
             .catch(err => console.error(err));
     }, []);
