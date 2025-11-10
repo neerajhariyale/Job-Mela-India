@@ -10,7 +10,11 @@ dotenv.config();
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+    origin: "*",   // test purpose — once stable, replace with your frontend domain
+    methods: "GET,POST,PUT,DELETE",
+    credentials: true
+  }));
 app.use(express.json({ limit: '100mb' }));
 app.use(express.urlencoded({ extended: true, limit: '100mb' }));
 

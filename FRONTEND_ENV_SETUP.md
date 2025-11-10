@@ -9,7 +9,7 @@ Your frontend is now configured to use environment variables for API URLs. You c
 ### **1. Create `.env` file in project root:**
 ```env
 # For Production (replace with your actual backend URL)
-VITE_API_BASE_URL=https://your-job-portal-backend.herokuapp.com
+VITE_API_BASE_URL=https://job-mela-india.railway.internal/
 
 # For Development (optional - defaults to localhost:5000)
 # VITE_API_BASE_URL=http://localhost:5000
@@ -78,4 +78,5 @@ axios.post(apiEndpoints.auth.login(), data)
 4. **Deploy your frontend** - it will automatically use the correct API URL!
 
 **No more localhost hardcoding!** 🎉
+
 
