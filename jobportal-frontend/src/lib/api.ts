@@ -1,5 +1,5 @@
 // API endpoints configuration
-const BASE_URL = import.meta.env.VITE_API_URL || 'https://job-mela-india-backend-production.up.railway.app';
+const BASE_URL = import.meta.env.VITE_API_URL || 'https://job-mela-india-production.up.railway.app';
 
 export const apiEndpoints = {
   jobs: {
