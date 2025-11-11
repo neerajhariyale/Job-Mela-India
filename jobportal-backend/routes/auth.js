@@ -85,6 +85,7 @@ router.post("/login", async (req, res) => {
         error: "VALIDATION_ERROR",
         statusCode: 400,
         details: err.message
+        
       });
     }
     
