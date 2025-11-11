@@ -9,14 +9,14 @@ async function testJobStatsAPI() {
     
     // Test the stats endpoint
     console.log('📊 Testing /api/jobs/stats endpoint...');
-    const statsResponse = await axios.get('http://localhost:5000/api/jobs/stats');
+    const statsResponse = await axios.get('https://job-mela-india-backend-production.up.railway.app/api/jobs/stats');
     
     console.log('✅ Status:', statsResponse.status);
     console.log('📈 Job Statistics:', statsResponse.data);
     
     // Test the chart-stats endpoint
     console.log('\n📊 Testing /api/jobs/chart-stats endpoint...');
-    const chartResponse = await axios.get('http://localhost:5000/api/jobs/chart-stats?timeRange=7d');
+    const chartResponse = await axios.get('https://job-mela-india-backend-production.up.railway.app/api/jobs/chart-stats?timeRange=7d');
     
     console.log('✅ Status:', chartResponse.status);
     console.log('📈 Chart Data Points:', chartResponse.data.length);

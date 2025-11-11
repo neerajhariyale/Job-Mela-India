@@ -13,7 +13,7 @@ async function testChartAPI() {
     for (const range of timeRanges) {
       console.log(`📊 Testing time range: ${range}`);
       
-      const response = await axios.get(`http://localhost:5000/api/jobs/chart-stats?timeRange=${range}`);
+      const response = await axios.get(`https://job-mela-india-backend-production.up.railway.app/api/jobs/chart-stats?timeRange=${range}`);
       
       console.log(`✅ Status: ${response.status}`);
       console.log(`📈 Data points: ${response.data.length}`);
