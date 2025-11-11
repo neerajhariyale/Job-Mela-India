@@ -4,6 +4,120 @@ import otpGenerator from "otp-generator";
 import nodemailer from "nodemailer";
 const router = express.Router();
 
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+const generateAndPersistOtp = async (user) => {
+  const otp = otpGenerator.generate(6, { upperCase: false, specialChars: false });
+  const otpExpiresAt = new Date(Date.now() + 5 * 60 * 1000);
+
+  user.otp = otp;
+  user.otpExpiresAt = otpExpiresAt;
+  await user.save();
+
+  return { otp, otpExpiresAt };
+};
+
+const sendOtpEmail = async ({ email, otp }) => {
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.SMTP_EMAIL,
+      pass: process.env.SMTP_PASS
+    }
+  });
+
+  const mailOptions = {
+    from: process.env.SMTP_EMAIL,
+    to: email,
+    subject: "Your OTP Code",
+    text: `Your OTP code is: ${otp}`
+  };
+
+  await transporter.sendMail(mailOptions);
+};
+
+// 🔐 SEND OTP (without password)
+router.post("/send-email-otp", async (req, res) => {
+  const { email } = req.body;
+
+  if (!email) {
+    return res.status(400).json({
+      success: false,
+      message: "Email is required",
+      error: "MISSING_EMAIL",
+      statusCode: 400
+    });
+  }
+
+  if (!emailRegex.test(email.trim())) {
+    return res.status(400).json({
+      success: false,
+      message: "Invalid email format",
+      error: "INVALID_EMAIL_FORMAT",
+      statusCode: 400
+    });
+  }
+
+  try {
+    const user = await User.findOne({ email: email.trim().toLowerCase() });
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+        error: "USER_NOT_FOUND",
+        statusCode: 404
+      });
+    }
+
+    const { otp } = await generateAndPersistOtp(user);
+    await sendOtpEmail({ email: user.email, otp });
+
+    res.status(200).json({
+      success: true,
+      message: "OTP sent to email successfully",
+      statusCode: 200
+    });
+  } catch (err) {
+    console.error("Send OTP Error:", err.message);
+
+    if (err.name === "ValidationError") {
+      return res.status(400).json({
+        success: false,
+        message: "Validation error occurred",
+        error: "VALIDATION_ERROR",
+        statusCode: 400,
+        details: err.message
+      });
+    }
+
+    if (err.name === "MongoError" || err.name === "MongoServerError") {
+      return res.status(500).json({
+        success: false,
+        message: "Database connection error",
+        error: "DATABASE_ERROR",
+        statusCode: 500
+      });
+    }
+
+    if (err.code === "EAUTH" || err.code === "ECONNECTION") {
+      return res.status(500).json({
+        success: false,
+        message: "Failed to send OTP email",
+        error: "EMAIL_SEND_FAILED",
+        statusCode: 500
+      });
+    }
+
+    res.status(500).json({
+      success: false,
+      message: "Internal server error occurred",
+      error: "INTERNAL_SERVER_ERROR",
+      statusCode: 500
+    });
+  }
+});
+
 // 🔐 LOGIN & OTP SEND
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
@@ -19,7 +133,6 @@ router.post("/login", async (req, res) => {
   }
 
   // ✅ Validate email format
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email.trim())) {
     return res.status(400).json({
       success: false,
@@ -44,30 +157,8 @@ router.post("/login", async (req, res) => {
       });
     }
 
-    const otp = otpGenerator.generate(6, { upperCase: false, specialChars: false });
-    const otpExpiresAt = new Date(Date.now() + 5 * 60 * 1000); // 5 minutes
-
-    user.otp = otp;
-    user.otpExpiresAt = otpExpiresAt;
-    await user.save();
-
-    // ✅ Send OTP via email
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.SMTP_EMAIL,
-        pass: process.env.SMTP_PASS
-      }
-    });
-
-    const mailOptions = {
-      from: process.env.SMTP_EMAIL,
-      to: user.email,
-      subject: "Your OTP Code",
-      text: `Your OTP code is: ${otp}`
-    };
-
-    await transporter.sendMail(mailOptions);
+    const { otp } = await generateAndPersistOtp(user);
+    await sendOtpEmail({ email: user.email, otp });
 
     res.status(200).json({
       success: true,
