@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "scripts": {
     "build": "echo \"No build step required\"",
+    "dev": "cd jobportal-backend && node server.js",
     "start": "cd jobportal-backend && node server.js",
     "install:backend": "cd jobportal-backend && npm install",
     "install:frontend": "cd jobportal-frontend && npm install"
